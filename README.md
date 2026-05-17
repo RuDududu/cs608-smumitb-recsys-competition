@@ -9,10 +9,16 @@
 | NCRR@50 | 0.060204 |
 | Recall@50 | 0.105510 |
 
-**Note:** This code was originally developed and run on Google Colab (A100 GPU).
-The Python files here are a clean refactoring of the original notebook for reference purposes.
-Path constants in `config.py` point to Google Drive locations and will need to be updated
-for local use.
+> **Note:** This code was originally developed and run on Google Colab (A100 GPU).
+> The Python files here are a clean refactoring of the original notebook for reference purposes.
+> Path constants in `config.py` point to Google Drive locations and will need to be updated
+> for local use.
+
+## Dataset
+
+The dataset was provided by Preferred.AI and is proprietary and confidential. It consists of explicit user-item ratings (scale 1–5) split across a training CSV and a probe CSV, together comprising 238,951 unique interactions across 18,937 users and 51,173 items. The data is extremely sparse (99.97%) with a median of approximately 7 interactions per user and a strong positive skew (~73% five-star ratings).
+
+**The dataset is not publicly available and cannot be shared.** The code in this repository is provided for reference and documentation purposes only and cannot be run without access to the original data files.
 
 ## Pipeline
 
@@ -40,21 +46,6 @@ cs608_recsys/
     └── bpr.py         # BPR-MF model (candidate retrieval)
 ```
 
-## Usage
-
-### Reproduce final submission
-```bash
-python submit.py
-```
-Requires 80GB A100 GPU for ADMM-SLIM min_count=1 training (~25 min).
-Subsequent runs load from cache (<5 min).
-
-### Run exploratory sweeps
-```bash
-python explore.py
-```
-Runs EASE lambda sweep, ADMM-SLIM lambda sweep, BPR training, and unique recall diagnostic.
-
 ## Key Hyperparameters
 
 | Component | Parameter | Best Value |
@@ -71,14 +62,6 @@ Runs EASE lambda sweep, ADMM-SLIM lambda sweep, BPR training, and unique recall 
 
 The probe CSV (73,943 interactions) was pooled with the training CSV (165,008 interactions) into a full union of 238,951 interactions (after deduplication). A 15% per-user stratified holdout was carved from the union for local evaluation. The full union was used for final submissions.
 
-## Requirements
-
-```
-torch>=2.0
-numpy
-pandas
-scipy
-```
 
 ## References
 
